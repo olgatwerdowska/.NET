@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "provider": "unpkg",
+      "library": "twitter-bootstrap@2.1.1",
+      "destination": "lib/twitter-bootstrap/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "bootstrap@4.5.3",
+      "destination": "lib/bootstrap/"
+    }
+  ]
+}
