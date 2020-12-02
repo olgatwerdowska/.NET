@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Products.Models;
 
 namespace Products.Models
 {
@@ -13,5 +14,36 @@ namespace Products.Models
             this.ctx = ctx;
         }
         public IQueryable<Product> Products => ctx.Products;
+
+        public void SaveProduct(Product product)
+        {
+            if (product.ProductId == 0)
+            {
+                ctx.Products.Add(product);
+            }
+            else
+            {
+                Product dbEntry = ctx.Products.FirstOrDefault(p => p.ProductId == product.ProductId);
+                if (dbEntry != null)
+                {
+                    dbEntry.Name = product.Name;
+                    dbEntry.Description = product.Description;
+                    dbEntry.Price = product.Price;
+                    dbEntry.Category = product.Category;
+                }
+            }
+            ctx.SaveChanges();
+        }
+
+        public Product DeleteProduct(int productID)
+        {
+            Product dbEntry = ctx.Products.FirstOrDefault(p => p.ProductId == productID);
+            if (dbEntry != null)
+            {
+                ctx.Products.Remove(dbEntry);
+                ctx.SaveChanges();
+            }
+            return dbEntry;
+        }
     }
 }
