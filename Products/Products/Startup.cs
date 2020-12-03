@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Products.Models;
+using WebApplication.Extensions;
 using WebApplication9.Models;
+using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
 
 namespace Products
 {
@@ -40,18 +37,12 @@ namespace Products
 
             app.UseRouting();
 
-            /*app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
-            });*/
 
             app.UseDeveloperExceptionPage(); // informacje szczegółowe o błędach
             app.UseStatusCodePages(); // Wyświetla strony ze statusem błędu
             app.UseStaticFiles(); // obsługa treści statycznych css, images, js
             app.UseRouting();
+            app.UseElapsedTimeMiddleware();
 
             app.UseEndpoints(routes =>
             {
