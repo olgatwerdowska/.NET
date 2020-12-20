@@ -5,9 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Products.Models;
-using WebApplication.Extensions;
+//using WebApplication.Extensions;
 using WebApplication9.Models;
-using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
+using Microsoft.AspNetCore.Identity;
 
 namespace Products
 {
@@ -25,24 +25,34 @@ namespace Products
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration["Data:SportStoreProducts:ConnectionString"]));
 
+            services.AddIdentity<IdentityUser, IdentityRole>() 
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddMvc();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            if (env.IsDevelopment()) {
+                app.UseDeveloperExceptionPage(); 
+                app.UseStatusCodePages(); 
+            } else { app.UseExceptionHandler("/Error"); }
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
 
             app.UseDeveloperExceptionPage(); // informacje szczegółowe o błędach
             app.UseStatusCodePages(); // Wyświetla strony ze statusem błędu
             app.UseStaticFiles(); // obsługa treści statycznych css, images, js
             app.UseRouting();
-            app.UseElapsedTimeMiddleware();
+            //app.UseElapsedTimeMiddleware();
+
+            app.UseAuthorization();
 
             app.UseEndpoints(routes =>
             {
@@ -69,7 +79,8 @@ namespace Products
 
             });
 
-            SeedData.EnsurePopulated(app);
+          SeedData.EnsurePopulated(app);
+
 
         }
     }

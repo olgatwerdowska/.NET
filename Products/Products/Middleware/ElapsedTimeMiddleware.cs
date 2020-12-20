@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Products.Middleware
+/*namespace Products.Middleware
 {
     public class ElapsedTimeMiddleware
     {
@@ -24,4 +24,4 @@ namespace Products.Middleware
 
         }
     }
-}
+}*/

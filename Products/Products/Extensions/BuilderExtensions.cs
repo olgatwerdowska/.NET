@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Products.Middleware;
+﻿/*using Microsoft.AspNetCore.Builder;
+
 
 namespace WebApplication.Extensions
 {
@@ -11,4 +11,4 @@ namespace WebApplication.Extensions
         }
     }
 }
-}
+}*/
