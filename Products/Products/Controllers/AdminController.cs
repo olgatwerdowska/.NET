@@ -18,12 +18,15 @@ namespace Products.Controllers
             repository = repo;
         }
 
-        public ViewResult Index() => View(repository.Products);
+        public ViewResult Index() => View(repository.Products); // zwraca wszytskie produkty
 
-        public ViewResult Edit(int productId) => View(repository.Products.FirstOrDefault(p => p.ProductId == productId));
+        public ViewResult GetById(int id) => View(repository.Products.Single(p => p.ProductId == id)); // zwraca produkt wyvrany po id
+
+
+        public ViewResult Edit(int productId) => View(repository.Products.FirstOrDefault(p => p.ProductId == productId)); //Do widoku edycji zwraca model produktu na podstawie podanego ID
         [HttpPost]
 
-        public ActionResult Save(Product product)
+        public ActionResult Save(Product product) //zapisuje podaną encję w bazie danych (przez repozytorium)
         {
             if(ModelState.IsValid)
             {
@@ -37,11 +40,11 @@ namespace Products.Controllers
             }
         }
 
-        public ViewResult Create() => View("Edit", new Product());
+        public ViewResult Create() => View("Edit", new Product()); //Do widoku edycji zwraca nową encję produktu
 
         [HttpPost]
 
-        public ActionResult Delete(int productId)
+        public ActionResult Delete(int productId) //Na podstawie podanego id poprzez repozytorium usuwa produkt z bazy
         {
             Product deleteProduct = repository.DeleteProduct(productId);
 

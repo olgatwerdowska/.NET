@@ -12,5 +12,6 @@ namespace Products.Models
         void SaveProduct(Product product);
         Product DeleteProduct(int productId);
 
+        //warstwa odpowiadająca za dostęp do bazy danych
     }
 }

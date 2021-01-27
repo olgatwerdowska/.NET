@@ -31,6 +31,7 @@ namespace Products
 
             services.AddMvc();
 
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,17 +66,22 @@ namespace Products
                     pattern: "Product/{category}",
                     defaults: new
                     {
-                        controller = "Product",
+                        controller = "Product",  // Przekierowanie do listy produktów 
                         action = "List"
                     });
                 routes.MapControllerRoute(
                     name: null,
-                    pattern: "Admin/{action=Index}",
+                    pattern: "Admin/{action=Index}", // Przekiedowanie na podstrone Admina
                     defaults: new
                     {
                         controller = "Admin"
                     });
+                app.UseSwagger();
 
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                });
 
             });
 
